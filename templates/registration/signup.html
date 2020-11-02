@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="login-container container">
+        
+        {% if form.errors %}
+            <div class="login-error">
+                <h3>There was an error with your email or password</h3>
+            </div>
+        {% endif %}
+        <form method="post" action="{% url 'signup' %}">
+            {% csrf_token %}
+            {{form}}
+            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+              </button>
+              <input type="hidden" name='next' value="{{next}}">
+        </form>
+    
+        <p><a href="{% url 'login' %}">Rather Login</a></p>
+    </div>
+{% endblock content %}

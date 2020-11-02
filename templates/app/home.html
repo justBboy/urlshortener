@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<ul id="slide-out" class="sidenav">
+  {% if user.is_authenticated %}
+
+    <li>
+      <div class="user-view">
+        <div class="background">
+          <img src="{% static 'images/dummy_user.jpg' %}" alt="">
+        </div>
+          <span class="dark-text email">{{user.email}}</span></a>
+          <a href="{% url 'logout' %}" class="s-screen-account waves-effect waves-light btn">Logout</a>
+      </div>
+    </li>
+    <li>
+      <h4>These Are Your Shortened Urls</h4>
+    </li>
+    {% for url in request.user.url_set.all %}
+    <div>
+      <li class="user-url-link">
+        <h6>
+          <a href="/{{url.shortenedid}}">{{url.actualurl}} to {{hostname}}/{{url.shortenedid}}</a>
+        </h6>
+      </li>
+    </div>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  <div class="header-container">
+    <div class="left-header">
+      <h2 class="left-header-title">Shorten Your Urls</h2>
+      <p>A url shortener built to work like bit.ly</p>
+    </div>
+    <div class="right-header">
+      <img class="right-header-img" src="{% static 'images/illo-mobile-810x480-1.jpg' %}" width="100%" height="100%" alt="">
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="container">
+      <form method="post" action="/">
+        {% csrf_token %}
+        {{ form }}
+        <button id="url-submit" class="btn waves-effect waves-light" type="submit" name="action">Shorten
+          <i class="material-icons right">send</i>
+        </button>
+      </form>
+      {% if sentUrl %}
+        {% if shortenedId %}
+          <div class="url-result center">
+            <h3>{{ sentUrl }} >>>> <a href='/{{ shortenedId }}'>{{ shortenedUrl }}</a></h3>
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="fixed-action-btn">
+    <a href="{% url 'login' %}" style="background: #239" class="btn-floating btn-large red">
+      <i class="large material-icons">account_circle</i>
+    </a>
+  </div>
+{% endblock content %}
