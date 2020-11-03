@@ -26,6 +26,8 @@
       </li>
     </div>
     {% endfor %}
+    {% else %}
+    <p class="middle">Please <a href="{% url 'login' %}">login</a> here to see your urls</p>
     {% endif %}
   </ul>
 

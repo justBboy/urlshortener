@@ -99,3 +99,9 @@ body{
 .url-result h3{
     font-size: smaller;
 }
+
+
+.middle{
+    text-align: center;
+    margin-top: 50%;
+}
